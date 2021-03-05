@@ -1,5 +1,5 @@
-# VaultGraphQl
+# Vault extension for ScandiPWA
 
-**VaultGraphQl** provides type and resolver information for the GraphQl module
-to generate Vault (stored payment information) information endpoints. This module also
-provides mutations for modifying a payment token.
+**Vault** extension provides access to customers stored payment methods.
+On My Account page customer can manage stored payment methods and use them on checkout.
+
