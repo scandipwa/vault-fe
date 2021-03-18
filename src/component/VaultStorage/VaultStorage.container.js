@@ -12,6 +12,9 @@ import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+import { DeviceType } from 'Type/Device';
+
+import { PaymentMethods } from '../../type/VaultPaymentMethods';
 import VaultStorage from './VaultStorage.component';
 
 export const VaultDispatcher = import(
@@ -19,7 +22,7 @@ export const VaultDispatcher = import(
     '../../store/Vault/Vault.dispatcher'
 );
 
-/** @namespace VaultGraphQl/Component/VaultStorage/Container/mapStateToProps */
+/** @namespace VaultGraphql/Component/VaultStorage/Container/mapStateToProps */
 export const mapStateToProps = (state) => ({
     storedPaymentMethods: state.VaultReducer.storedPaymentMethods,
     selectedStoredPaymentMethod: state.VaultReducer.public_hash,
@@ -27,7 +30,7 @@ export const mapStateToProps = (state) => ({
     device: state.ConfigReducer.device
 });
 
-/** @namespace VaultGraphQl/Component/VaultStorage/Container/mapDispatchToProps */
+/** @namespace VaultGraphql/Component/VaultStorage/Container/mapDispatchToProps */
 export const mapDispatchToProps = (dispatch) => ({
     getStoredPaymentMethods: () => {
         VaultDispatcher.then(
@@ -36,14 +39,16 @@ export const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-/** @namespace VaultGraphQl/Component/VaultStorage/Container */
+/** @namespace VaultGraphql/Component/VaultStorage/Container/VaultStorageContainer */
 export class VaultStorageContainer extends PureComponent {
     static propTypes = {
         selectedStoredPaymentMethod: PropTypes.string,
-        storedPaymentMethods: PropTypes.object.isRequired,
+        storedPaymentMethods: PaymentMethods.isRequired,
         getStoredPaymentMethods: PropTypes.func.isRequired,
+        isCheckout: PropTypes.bool.isRequired,
         isLoading: PropTypes.bool,
-        paymentMethodVaultCode: PropTypes.string
+        paymentMethodVaultCode: PropTypes.string,
+        device: DeviceType.isRequired
     };
 
     static defaultProps = {
@@ -57,9 +62,22 @@ export class VaultStorageContainer extends PureComponent {
         getStoredPaymentMethods();
     }
 
-    containerProps = () => ({
-        paymentMethods: this.handleFilterStoredPaymentMethods()
-    });
+    containerProps() {
+        const {
+            device,
+            selectedStoredPaymentMethod,
+            isLoading,
+            isCheckout
+        } = this.props;
+
+        return {
+            paymentMethods: this.handleFilterStoredPaymentMethods(),
+            device,
+            selectedStoredPaymentMethod,
+            isLoading,
+            isCheckout
+        };
+    }
 
     /*
      * Since from VaultGraphQl we are getting all stored paments with provided user token
@@ -85,9 +103,9 @@ export class VaultStorageContainer extends PureComponent {
          * we are getting code with vault postfix
          * braintree_cc_vault => braintree
         */
-        const selectedPaymentCode =  paymentMethodVaultCode.split('_')[0];
+        const selectedPaymentCode = paymentMethodVaultCode.split('_')[0];
 
-        const filteredPaymentMethods = items.filter(value => value.payment_method_code === selectedPaymentCode);
+        const filteredPaymentMethods = items.filter((value) => value.payment_method_code === selectedPaymentCode);
 
         return filteredPaymentMethods;
     }
@@ -95,8 +113,6 @@ export class VaultStorageContainer extends PureComponent {
     render() {
         return (
             <VaultStorage
-              { ...this.props }
-              { ...this.state }
               { ...this.containerProps() }
             />
         );

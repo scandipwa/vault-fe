@@ -15,14 +15,15 @@ import { PureComponent } from 'react';
 import Image from 'Component/Image';
 import { DeviceType } from 'Type/Device';
 
+import { PaymentMethod } from '../../type/VaultPaymentMethods';
 import { getCardIconByType } from '../../util/Card';
 
 import './VaultStorageItem.style';
 
-/** @namespace VaultGraphQl/Component/VaultStorageItem/Component */
-export class VaultStorageItem extends PureComponent {
+/** @namespace VaultGraphql/Component/VaultStorageItem/Component/VaultStorageItemComponent */
+export class VaultStorageItemComponent extends PureComponent {
     static propTypes = {
-        paymentMethod: PropTypes.object.isRequired,
+        paymentMethod: PaymentMethod.isRequired,
         handleDeleteStoredPaymentMethod: PropTypes.func.isRequired,
         isCheckout: PropTypes.bool.isRequired,
         handleOnClick: PropTypes.func.isRequired,
@@ -188,4 +189,4 @@ export class VaultStorageItem extends PureComponent {
     }
 }
 
-export default VaultStorageItem;
+export default VaultStorageItemComponent;

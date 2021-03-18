@@ -19,10 +19,10 @@ import VaultStorageItem from '../VaultStorageItem';
 
 import './VaultStorage.style';
 
-/** @namespace VaultGraphQl/Component/VaultStorage/Component */
-export class VaultStorage extends PureComponent {
+/** @namespace VaultGraphql/Component/VaultStorage/Component/VaultStorageComponent */
+export class VaultStorageComponent extends PureComponent {
     static propTypes = {
-        paymentMethods: PropTypes.array,
+        paymentMethods: PropTypes.arrayOf(PropTypes.string),
         isLoading: PropTypes.bool,
         selectedStoredPaymentMethod: PropTypes.string,
         device: DeviceType.isRequired,
@@ -50,7 +50,7 @@ export class VaultStorage extends PureComponent {
     renderVaultCard = (paymentMethod) => {
         const {
             isCheckout,
-            selectedStoredPaymentMethod,
+            selectedStoredPaymentMethod
         } = this.props;
         const {
             public_hash,
@@ -170,4 +170,4 @@ export class VaultStorage extends PureComponent {
     }
 }
 
-export default VaultStorage;
+export default VaultStorageComponent;

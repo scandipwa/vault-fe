@@ -11,7 +11,7 @@
 
 import { Field } from 'Util/Query';
 
-/** @namespace VaultGraphQl/Query/Vault/Query/VaultQuery */
+/** @namespace VaultGraphql/Query/Vault/Query/VaultQuery */
 export class VaultQuery {
     getQuery() {
         return new Field('customerPaymentTokens')
