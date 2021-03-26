@@ -11,18 +11,18 @@
 
 import {
     UPDATE_IS_LOADING,
-    UPDATE_STORED_PAYMENT_METHODS,
-    UPDATE_SELECTED_PAYMENT_METHOD
+    UPDATE_SELECTED_PAYMENT_METHOD,
+    UPDATE_STORED_PAYMENT_METHODS
 } from './Vault.action';
 
-/** @namespace VaultGraphQl/Store/Vault/Reducer/getInitialState */
+/** @namespace VaultGraphql/Store/Vault/Reducer/getInitialState */
 export const getInitialState = () => ({
     storedPaymentMethods: {},
     isLoading: true,
     public_hash: ''
 });
 
-/** @namespace VaultGraphQl/Store/Vault/Reducer/VaultReducer */
+/** @namespace VaultGraphql/Store/Vault/Reducer/VaultReducer */
 export const VaultReducer = (
     state = getInitialState(),
     action

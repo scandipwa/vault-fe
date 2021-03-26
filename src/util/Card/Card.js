@@ -13,10 +13,10 @@
 import NONE from '../../../view/base/web/images/cc/NONE.png';
 import { CARD_ICON_MAP } from './Card.config';
 
-/** @namespace VaultGraphQl/util/Card/searchIcon */
+/** @namespace VaultGraphql/Util/Card/searchIcon */
 export const searchIcon = (type) => CARD_ICON_MAP.find(((card) => card.type === type));
 
-/** @namespace VaultGraphQl/util/Card/getCardIconByType */
+/** @namespace VaultGraphql/Util/Card/getCardIconByType */
 export const getCardIconByType = (type) => {
     const result = searchIcon(type);
 
@@ -28,4 +28,3 @@ export const getCardIconByType = (type) => {
 
     return src;
 };
-

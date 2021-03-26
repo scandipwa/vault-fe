@@ -13,33 +13,54 @@ import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+import { DeviceType } from 'Type/Device';
+
 import { VaultDispatcher } from '../../store/Vault/Vault.dispatcher';
+import { PaymentMethod } from '../../type/VaultPaymentMethods';
 import VaultStorageItem from './VaultStorageItem.component';
 
-/** @namespace VaultGraphQl/Component/VaultStorageItem/Container/mapStateToProps */
+/** @namespace VaultGraphql/Component/VaultStorageItem/Container/mapStateToProps */
 export const mapStateToProps = (state) => ({
     device: state.ConfigReducer.device
 });
 
-/** @namespace VaultGraphQl/Component/VaultStorageItem/Container/mapDispatchToProps */
+/** @namespace VaultGraphql/Component/VaultStorageItem/Container/mapDispatchToProps */
 export const mapDispatchToProps = (dispatch) => ({
     deletePaymentMethod: (options) => VaultDispatcher.deletePaymentMethod(dispatch, options),
     onSelectPaymentMethod: (options) => VaultDispatcher.onSelectPaymentMethod(dispatch, options)
 });
 
-/** @namespace VaultGraphQl/Component/VaultStorageItem/Container */
+/** @namespace VaultGraphql/Component/VaultStorageItem/Container/VaultStorageItemContainer */
 export class VaultStorageItemContainer extends PureComponent {
     static propTypes = {
         deletePaymentMethod: PropTypes.func.isRequired,
-        handleCardOnSelect: PropTypes.func,
         onSelectPaymentMethod: PropTypes.func.isRequired,
-        paymentMethod: PropTypes.object.isRequired
+        paymentMethod: PaymentMethod.isRequired,
+        isCheckout: PropTypes.bool.isRequired,
+        isSelected: PropTypes.bool.isRequired,
+        device: DeviceType.isRequired
     };
 
     containerFunctions = {
         handleDeleteStoredPaymentMethod: this.handleDeleteStoredPaymentMethod.bind(this),
         handleOnClick: this.handleOnClick.bind(this)
     };
+
+    containerProps() {
+        const {
+            paymentMethod,
+            isCheckout,
+            isSelected,
+            device
+        } = this.props;
+
+        return {
+            paymentMethod,
+            isCheckout,
+            device,
+            isSelected
+        };
+    }
 
     handleDeleteStoredPaymentMethod() {
         const { paymentMethod: { public_hash }, deletePaymentMethod } = this.props;
@@ -56,8 +77,7 @@ export class VaultStorageItemContainer extends PureComponent {
     render() {
         return (
             <VaultStorageItem
-              { ...this.props }
-              { ...this.state }
+              { ...this.containerProps() }
               { ...this.containerFunctions }
             />
         );
